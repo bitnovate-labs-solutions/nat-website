@@ -25,12 +25,19 @@ type Props = {
  * named with the "Vertical" prefix for clear distinction.
  */
 export function PropertyLandingVerticalTemplate({ data }: Props) {
+  const ctaContext = {
+    propertyName: data.name,
+    locationName: data.locationName,
+    whatsapp: data.whatsapp,
+  };
+
   return (
     <article>
       <VerticalHeroSection
         data={data.hero}
         propertyName={data.name}
         locationName={data.locationName}
+        ctaContext={ctaContext}
       />
       <VerticalIntroSection data={data.intro} />
       <VerticalPanoramaSection data={data.panorama} />
@@ -44,8 +51,8 @@ export function PropertyLandingVerticalTemplate({ data }: Props) {
       <VerticalProximitySection items={data.proximityHighlights} />
       <VerticalLifestyleSection data={data.lifestyle} />
       <VerticalGallerySection data={data.gallery} />
-      <VerticalFAQSection data={data.faq} />
-      <VerticalFinalCTASection data={data.finalCta} />
+      <VerticalFAQSection data={data.faq} ctaContext={ctaContext} />
+      <VerticalFinalCTASection data={data.finalCta} ctaContext={ctaContext} />
     </article>
   );
 }

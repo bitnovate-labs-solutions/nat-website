@@ -1,10 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
-import { submitWeb3Form, type ContactFormState } from "@/app/actions/contact";
+import { useWeb3Form } from "@/hooks/useWeb3Form";
 import { cn } from "@/lib/utils";
-
-const initialState: ContactFormState = {};
 
 type PropertyRegisterFormProps = {
   submitLabel: string;
@@ -19,16 +16,13 @@ export function PropertyRegisterForm({
   className,
   variant = "light",
 }: PropertyRegisterFormProps) {
-  const [state, formAction, isPending] = useActionState(
-    submitWeb3Form,
-    initialState,
-  );
+  const { onSubmit, result, isPending, resultClassName } = useWeb3Form();
 
   const isDark = variant === "dark";
 
   return (
     <form
-      action={formAction}
+      onSubmit={onSubmit}
       className={cn(
         "rounded-2xl p-6 sm:p-8",
         isDark ? "bg-white shadow-xl" : "border border-beige-300 bg-white",
@@ -36,7 +30,6 @@ export function PropertyRegisterForm({
       )}
     >
       <input type="hidden" name="subject" value={subject} />
-      <input type="hidden" name="formType" value="register" />
 
       <div className="space-y-4">
         <div>
@@ -91,16 +84,7 @@ export function PropertyRegisterForm({
         </div>
       </div>
 
-      {state.message && (
-        <p
-          className={cn(
-            "mt-4 text-sm",
-            state.success ? "text-emerald-600" : "text-rose-600",
-          )}
-        >
-          {state.message}
-        </p>
-      )}
+      {result && <p className={resultClassName}>{result}</p>}
 
       <button
         type="submit"

@@ -1,10 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
-import { submitWeb3Form, type ContactFormState } from "@/app/actions/contact";
+import { useWeb3Form } from "@/hooks/useWeb3Form";
 import { cn } from "@/lib/utils";
-
-const initialState: ContactFormState = {};
 
 type PropertyEmailFormProps = {
   submitLabel: string;
@@ -17,21 +14,29 @@ export function PropertyEmailForm({
   subject,
   className,
 }: PropertyEmailFormProps) {
-  const [state, formAction, isPending] = useActionState(
-    submitWeb3Form,
-    initialState,
-  );
+  const { onSubmit, result, isPending, resultClassName } = useWeb3Form({
+    mapFormData: (formData) => {
+      const contact = formData.get("contact")?.toString().trim() ?? "";
+      const question = formData.get("question")?.toString().trim() ?? "";
+
+      formData.delete("contact");
+      formData.delete("question");
+      formData.set("message", question);
+      formData.set("phone", contact);
+
+      return formData;
+    },
+  });
 
   return (
     <form
-      action={formAction}
+      onSubmit={onSubmit}
       className={cn(
         "rounded-2xl border border-white/20 bg-white/95 p-6 shadow-xl backdrop-blur-sm sm:p-8",
         className,
       )}
     >
       <input type="hidden" name="subject" value={subject} />
-      <input type="hidden" name="formType" value="email" />
 
       <div className="space-y-4">
         <div>
@@ -86,16 +91,7 @@ export function PropertyEmailForm({
         </div>
       </div>
 
-      {state.message && (
-        <p
-          className={cn(
-            "mt-4 text-sm",
-            state.success ? "text-emerald-600" : "text-rose-600",
-          )}
-        >
-          {state.message}
-        </p>
-      )}
+      {result && <p className={resultClassName}>{result}</p>}
 
       <button
         type="submit"

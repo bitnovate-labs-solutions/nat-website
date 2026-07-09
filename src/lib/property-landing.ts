@@ -11,8 +11,16 @@ import {
   Utensils,
   type LucideIcon,
 } from "lucide-react";
-import type { PropertyCTA } from "@/types/property-landing";
-import { WHATSAPP_URL } from "@/lib/constants";
+import type {
+  PropertyCTA,
+  PropertyCtaContext,
+  PropertyWhatsAppConfig,
+} from "@/types/property-landing";
+import {
+  DEFAULT_WHATSAPP_MESSAGE_TEMPLATE,
+  WHATSAPP_PHONE,
+  WHATSAPP_URL,
+} from "@/lib/constants";
 
 const iconMap: Record<string, LucideIcon> = {
   bed: Bed,
@@ -31,8 +39,45 @@ export function getPropertyIcon(name: string): LucideIcon {
   return iconMap[name] ?? Building;
 }
 
-export function resolveCtaHref(cta: PropertyCTA): string {
-  if (cta.whatsapp) return WHATSAPP_URL;
+export function buildWhatsAppMessage(
+  config: PropertyWhatsAppConfig,
+  propertyName: string,
+  locationName?: string,
+): string {
+  const template = config.messageTemplate ?? DEFAULT_WHATSAPP_MESSAGE_TEMPLATE;
+  const agentName = config.agentName ?? "Nate";
+
+  return template
+    .replace(/\{agentName\}/g, agentName)
+    .replace(/\{propertyName\}/g, propertyName)
+    .replace(/\{locationName\}/g, locationName ?? "");
+}
+
+export function buildWhatsAppUrl(
+  config: PropertyWhatsAppConfig,
+  propertyName: string,
+  locationName?: string,
+): string {
+  const phone = config.phone ?? WHATSAPP_PHONE;
+  const message = buildWhatsAppMessage(config, propertyName, locationName);
+  return `http://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+export function resolveCtaHref(
+  cta: PropertyCTA,
+  context?: PropertyCtaContext,
+): string {
+  if (cta.whatsapp) {
+    if (context) {
+      return buildWhatsAppUrl(
+        context.whatsapp,
+        context.propertyName,
+        context.locationName,
+      );
+    }
+    return WHATSAPP_URL;
+  }
+
   return cta.href ?? "#register";
 }
 

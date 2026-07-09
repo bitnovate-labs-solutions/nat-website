@@ -4,18 +4,19 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import type { PropertyLandingData } from "@/types/property-landing";
+import type { PropertyCtaContext, PropertyLandingData } from "@/types/property-landing";
 import { resolveCtaHref, isExternalCta } from "@/lib/property-landing";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { cn } from "@/lib/utils";
 
 type Props = {
   data: PropertyLandingData["faq"];
+  ctaContext: PropertyCtaContext;
 };
 
-export function VerticalFAQSection({ data }: Props) {
+export function VerticalFAQSection({ data, ctaContext }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const href = resolveCtaHref(data.cta);
+  const href = resolveCtaHref(data.cta, ctaContext);
   const external = isExternalCta(data.cta);
 
   return (

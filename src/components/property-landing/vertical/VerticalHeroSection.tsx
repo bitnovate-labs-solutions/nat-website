@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import type { PropertyLandingData } from "@/types/property-landing";
+import type { PropertyCtaContext, PropertyLandingData } from "@/types/property-landing";
 import {
   getPropertyIcon,
   resolveCtaHref,
-  isExternalCta,
 } from "@/lib/property-landing";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -13,9 +12,15 @@ type Props = {
   data: PropertyLandingData["hero"];
   propertyName: string;
   locationName: string;
+  ctaContext: PropertyCtaContext;
 };
 
-export function VerticalHeroSection({ data, propertyName, locationName }: Props) {
+export function VerticalHeroSection({
+  data,
+  propertyName,
+  locationName,
+  ctaContext,
+}: Props) {
   return (
     <section className="relative min-h-[90vh]">
       <Image
@@ -68,7 +73,7 @@ export function VerticalHeroSection({ data, propertyName, locationName }: Props)
             <ArrowRight className="h-4 w-4" />
           </Link>
           <a
-            href={resolveCtaHref(data.ctas.whatsapp)}
+            href={resolveCtaHref(data.ctas.whatsapp, ctaContext)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/80 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-foreground"

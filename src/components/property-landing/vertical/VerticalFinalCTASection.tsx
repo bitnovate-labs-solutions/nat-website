@@ -1,16 +1,17 @@
 import Image from "next/image";
 import { MessageCircle } from "lucide-react";
-import type { PropertyLandingData } from "@/types/property-landing";
+import type { PropertyCtaContext, PropertyLandingData } from "@/types/property-landing";
 import { resolveCtaHref } from "@/lib/property-landing";
 import { PropertyEmailForm } from "@/components/property-landing/forms/PropertyEmailForm";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 type Props = {
   data: PropertyLandingData["finalCta"];
+  ctaContext: PropertyCtaContext;
 };
 
-export function VerticalFinalCTASection({ data }: Props) {
-  const whatsappHref = resolveCtaHref(data.whatsapp);
+export function VerticalFinalCTASection({ data, ctaContext }: Props) {
+  const whatsappHref = resolveCtaHref(data.whatsapp, ctaContext);
 
   return (
     <section className="relative py-16 sm:py-20">

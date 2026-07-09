@@ -54,11 +54,30 @@ export type PropertyFAQItem = {
   answer: string;
 };
 
+export type PropertyWhatsAppConfig = {
+  /** Agent name used in the default message template. Default: "Nate" */
+  agentName?: string;
+  /**
+   * Custom WhatsApp message template.
+   * Placeholders: {agentName}, {propertyName}, {locationName}
+   */
+  messageTemplate?: string;
+  /** WhatsApp phone number without + or spaces. Default: 601128462186 */
+  phone?: string;
+};
+
+export type PropertyCtaContext = {
+  propertyName: string;
+  locationName: string;
+  whatsapp: PropertyWhatsAppConfig;
+};
+
 export type PropertyLandingData = {
   slug: string;
   locationSlug: string;
   locationName: string;
   name: string;
+  whatsapp: PropertyWhatsAppConfig;
   seo: {
     title: string;
     description: string;

@@ -16,6 +16,12 @@ const bangsarHillParkData = {
   locationName: "Bangsar",
   name: "Bangsar Hill Park",
 
+  whatsapp: {
+    agentName: "Nate",
+    messageTemplate:
+      "Hi {agentName}. I'm interested in {propertyName}, please send me more details. I saw it from your website, thanks!",
+  },
+
   seo: {
     title: "Bangsar Hill Park | New Launch in Bangsar, Kuala Lumpur",
     description:
