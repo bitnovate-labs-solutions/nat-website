@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { getPropertyBySlug, properties } from "@/data/properties";
+import { getPropertyLandingData } from "@/data/properties/index";
+import { PropertyLandingVerticalTemplate } from "@/components/property-landing/PropertyLandingVerticalTemplate";
 import { FAQ } from "@/components/faq/FAQ";
 import { placeholderFAQ } from "@/data/faq";
 import { Button } from "@/components/ui/Button";
@@ -23,7 +25,15 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { location, slug } = await params;
+  const landingData = getPropertyLandingData(location, slug);
   const property = getPropertyBySlug(location, slug);
+
+  if (landingData) {
+    return {
+      title: landingData.seo.title,
+      description: landingData.seo.description,
+    };
+  }
 
   if (!property) return { title: "Property Not Found" };
 
@@ -33,12 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PropertyLandingPage({ params }: Props) {
-  const { location, slug } = await params;
-  const property = getPropertyBySlug(location, slug);
-
-  if (!property) notFound();
-
+function PropertyPlaceholderPage({
+  property,
+}: {
+  property: NonNullable<ReturnType<typeof getPropertyBySlug>>;
+}) {
   return (
     <>
       <div className="border-b border-beige-200 bg-beige-100 py-4">
@@ -94,31 +103,10 @@ export default async function PropertyLandingPage({ params }: Props) {
               Full details for {property.name} are on the way
             </h2>
             <p className="mt-4 text-base leading-relaxed text-stone-500">
-              We&apos;re preparing a comprehensive overview of this development
-              including floor plans, pricing, and availability. In the meantime,
-              reach out to us for exclusive previews and early bird packages.
+              We&apos;re preparing a comprehensive overview of this development.
+              In the meantime, reach out to us for exclusive previews and early
+              bird packages.
             </p>
-
-            <dl className="mx-auto mt-8 grid max-w-md gap-4 text-left sm:grid-cols-3">
-              <div className="rounded-xl bg-beige-100 p-4">
-                <dt className="text-xs text-stone-400">Square Feet</dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  {property.sqftRange}
-                </dd>
-              </div>
-              <div className="rounded-xl bg-beige-100 p-4">
-                <dt className="text-xs text-stone-400">Bedrooms</dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  {property.bedrooms}
-                </dd>
-              </div>
-              <div className="rounded-xl bg-beige-100 p-4 sm:col-span-1">
-                <dt className="text-xs text-stone-400">Price Range</dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  {property.priceRange}
-                </dd>
-              </div>
-            </dl>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button href={WHATSAPP_URL} external showArrow>
@@ -138,4 +126,18 @@ export default async function PropertyLandingPage({ params }: Props) {
       <FAQ items={placeholderFAQ} />
     </>
   );
+}
+
+export default async function PropertyLandingPage({ params }: Props) {
+  const { location, slug } = await params;
+  const landingData = getPropertyLandingData(location, slug);
+
+  if (landingData) {
+    return <PropertyLandingVerticalTemplate data={landingData} />;
+  }
+
+  const property = getPropertyBySlug(location, slug);
+  if (!property) notFound();
+
+  return <PropertyPlaceholderPage property={property} />;
 }
