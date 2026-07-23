@@ -20,38 +20,36 @@ export function VerticalLeadFormSection({ data }: Props) {
       />
       <div className="absolute inset-0 bg-black/70" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-10">
-          <FadeIn>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
-              {data.heading}
-            </h2>
-            {data.subheading && (
-              <p className="mt-2 text-base text-white/80">{data.subheading}</p>
-            )}
-            <ul className="mt-6 space-y-3">
-              {data.benefits.map((benefit) => (
-                <li
-                  key={benefit}
-                  className="flex items-start gap-3 text-sm text-white/90 sm:text-base"
-                >
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white">
-                    <Check className="h-3 w-3" />
-                  </span>
-                  {benefit}
-                </li>
-              ))}
-            </ul>
-          </FadeIn>
+      <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+        <FadeIn className="text-center">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            {data.heading}
+          </h2>
+          {data.subheading && (
+            <p className="mt-2 text-base text-white/80">{data.subheading}</p>
+          )}
+          <ul className="mx-auto mt-6 inline-flex flex-col items-start gap-3 text-left">
+            {data.benefits.map((benefit) => (
+              <li
+                key={benefit}
+                className="flex items-start gap-3 text-sm text-white/90 sm:text-base"
+              >
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-500 text-white">
+                  <Check className="h-3 w-3" />
+                </span>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <PropertyRegisterForm
-              submitLabel={data.submitLabel}
-              subject={data.subject}
-              variant="dark"
-            />
-          </FadeIn>
-        </div>
+        <FadeIn delay={0.1} className="mt-10">
+          <PropertyRegisterForm
+            submitLabel={data.submitLabel}
+            subject={data.subject}
+            variant="dark"
+          />
+        </FadeIn>
       </div>
     </section>
   );

@@ -19,15 +19,15 @@ export function VerticalResidencesSection({ data }: Props) {
           </h2>
         </FadeIn>
 
-        <StaggerContainer className="mt-10 grid gap-8 sm:grid-cols-2">
+        <StaggerContainer className="mx-auto mt-10 grid max-w-5xl gap-8 sm:grid-cols-2">
           {data.items.map((residence) => {
             const href = resolveCtaHref(residence.cta);
             const external = isExternalCta(residence.cta);
 
             return (
               <StaggerItem key={residence.name}>
-                <article className="overflow-hidden rounded-2xl border border-beige-200 bg-beige-50">
-                  <div className="relative aspect-[3/4] sm:aspect-[4/5]">
+                <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-beige-200 bg-beige-50">
+                  <div className="relative aspect-[16/10]">
                     <Image
                       src={residence.image}
                       alt={residence.name}
@@ -36,15 +36,15 @@ export function VerticalResidencesSection({ data }: Props) {
                       sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-foreground">
+                  <div className="flex flex-1 flex-col p-6 sm:p-8">
+                    <h3 className="text-xl font-bold text-foreground sm:text-2xl">
                       {residence.name}
                     </h3>
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-4 space-y-2.5">
                       {residence.features.map((feature) => (
                         <li
                           key={feature}
-                          className="flex items-start gap-2 text-sm text-stone-500"
+                          className="flex items-start gap-2.5 text-sm text-stone-500 sm:text-base"
                         >
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
                           {feature}
@@ -56,7 +56,7 @@ export function VerticalResidencesSection({ data }: Props) {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold-600"
+                        className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold-600"
                       >
                         {residence.cta.label}
                         <ArrowRight className="h-4 w-4" />
@@ -64,7 +64,7 @@ export function VerticalResidencesSection({ data }: Props) {
                     ) : (
                       <Link
                         href={href}
-                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold-600"
+                        className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold-600"
                       >
                         {residence.cta.label}
                         <ArrowRight className="h-4 w-4" />

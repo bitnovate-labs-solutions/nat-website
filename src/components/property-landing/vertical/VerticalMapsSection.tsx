@@ -18,28 +18,28 @@ export function VerticalMapsSection({ data }: Props) {
           </FadeIn>
         )}
 
-        <div className="flex flex-col gap-6">
+        <div className="mx-auto grid max-w-4xl gap-5 sm:grid-cols-2">
           <FadeIn>
-            <div className="relative overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-stone-800">
               <Image
                 src={data.areaMap}
                 alt="Area location map"
-                width={1400}
-                height={800}
+                width={800}
+                height={600}
                 className="h-auto w-full"
-                sizes="100vw"
+                sizes="(max-width: 640px) 100vw, 40vw"
               />
             </div>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <div className="relative overflow-hidden rounded-2xl">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-stone-800">
               <Image
                 src={data.transitMap}
                 alt="Transit connectivity map"
-                width={1400}
-                height={800}
+                width={800}
+                height={600}
                 className="h-auto w-full"
-                sizes="100vw"
+                sizes="(max-width: 640px) 100vw, 40vw"
               />
             </div>
           </FadeIn>

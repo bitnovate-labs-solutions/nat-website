@@ -11,20 +11,20 @@ export function VerticalIntroSection({ data }: Props) {
   return (
     <section className="bg-beige-100 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-10">
-          <FadeIn>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <div className="mx-auto flex max-w-3xl flex-col gap-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:gap-12">
+          <FadeIn className="w-full shrink-0 lg:w-[42%]">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl lg:aspect-[4/3]">
               <Image
                 src={data.image}
                 alt={data.heading}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 42vw"
               />
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
+          <FadeIn delay={0.1} className="min-w-0 flex-1">
             <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               {data.heading}
             </h2>
