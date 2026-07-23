@@ -18,11 +18,11 @@ export const locations: Location[] = [
   },
   {
     slug: "seputeh",
-    name: "Seputeh",
+    name: "Seputeh", 
     description:
       "A well-established residential area with lush greenery and easy access to the city centre.",
     image:
-      "https://images.unsplash.com/photo-1545324417-cc1a3fa10c00?w=1200&q=80",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80",
     propertyCount: 3,
   },
   {
